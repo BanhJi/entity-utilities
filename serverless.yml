@@ -1,0 +1,257 @@
+service: entity-financing
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  versionFunctions: false
+  releasedVersion: v1
+  stackName: ${self:service}-${self:custom.stage}
+  region: ap-southeast-1 # this is the region that we deploy our lambda to
+  environment:
+    item_table: Entity-${self:custom.stage}
+    item_table_setting: settings-${self:custom.stage}
+  iamRoleStatements:
+    - Effect: "Allow" # or Deny
+      Resource: "*"
+      Action: # this is the action against dynamodb
+        - "dynamodb:Query"
+        - "dynamodb:Scan"
+        - "dynamodb:GetItem"
+        - "dynamodb:PutItem"
+        - "dynamodb:UpdateItem"
+        - "dynamodb:DeleteItem"
+        - "dynamodb:BatchWriteItem"
+    - Effect: "Allow"
+      Resource: "*"
+      Action:
+        - "sns:*"
+
+plugins:
+  - serverless-domain-manager
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  domains:
+    prod: apis.banhji.com
+    staging: staging-apis.banhji.com
+    dev: dev-apis.banhji.com
+  customDomain:
+    basePath: ${self:service}
+    domainName: ${self:custom.domains.${self:custom.stage}}
+    stage: ${self:custom.stage}
+    createRout53Record: true
+
+package:
+  individually: true
+  patterns:
+    - "!**/*"
+
+functions:
+  loanCreate:
+    handler: api/loan/add.index
+    package:
+      patterns:
+        - config/**
+        - node_modules/uuid/**
+        - api/functions/functions.js
+        - api/loan/add.js
+      individually: true
+    events:
+      - http:
+          path: loan/institute/{institute_id}/create
+          method: post
+          cors: true
+  loanGet:
+    handler: api/loan/get.get
+    package:
+      patterns:
+        - config/**
+        - api/loan/get.js
+      individually: true
+    events:
+      - http:
+          path: loan/institute/{institute_id}/get/{id}
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                institute_id: true
+  loanGets:
+    handler: api/loan/get.gets
+    package:
+      patterns:
+        - config/**
+        - api/loan/get.js
+      individually: true
+    events:
+      - http:
+          path: loan/institute/{institute_id}/list
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                institute_id: true
+  loanReceiptCreate:
+    handler: api/loan/add.receipt
+    package:
+      patterns:
+        - config/**
+        - node_modules/uuid/**
+        - api/functions/functions.js
+        - api/loan/add.js
+      individually: true
+    events:
+      - http:
+          path: loanreceipt/institute/{institute_id}/create
+          method: post
+          cors: true
+  loanOutstandingReport:
+    handler: api/loan/report.loanoutstanding
+    package:
+      patterns:
+        - config/**
+        - api/loan/report.js
+      individually: true
+    events:
+      - http:
+          path: loanoutstanding/institute/{institute_id}/get
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                institute_id: true
+  summaryLoanBalanceReport:
+    handler: api/loan/report.summaryloanbalance
+    package:
+      patterns:
+        - config/**
+        - api/loan/report.js
+      individually: true
+    events:
+      - http:
+          path: summaryloanbalance/institute/{institute_id}/get
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                institute_id: true
+  loanRepaymentReport:
+    handler: api/loan/report.loanrepayment
+    package:
+      patterns:
+        - config/**
+        - api/loan/report.js
+      individually: true
+    events:
+      - http:
+          path: loanrepayment/institute/{institute_id}/get
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                institute_id: true
+  loanPaymentCreate:
+    handler: api/loan/add.loanpayment
+    package:
+      patterns:
+        - config/**
+        - node_modules/uuid/**
+        - api/functions/functions.js
+        - api/loan/add.js
+      individually: true
+    events:
+      - http:
+          path: loanpayment/institute/{institute_id}/create
+          method: post
+          cors: true
+  loanScheduleGet:
+    handler: api/loan/get.loanschedule
+    package:
+      patterns:
+        - config/**
+        - api/loan/get.js
+      individually: true
+    events:
+      - http:
+          path: loanschedule/institute/{institute_id}/list/{id}
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                institute_id: true
+  loanBalanceMonthly:
+    handler: api/loan/report.loanbalmonthly
+    package:
+      patterns:
+        - config/**
+        - api/loan/report.js
+      individually: true
+    events:
+      - http:
+          path: monthlyloanbalance/institute/{institute_id}/get
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                institute_id: true
+  loanRepaymentMonthly:
+    handler: api/loan/report.loanpaymonthly
+    package:
+      patterns:
+        - config/**
+        - api/loan/report.js
+      individually: true
+    events:
+      - http:
+          path: monthlyloanrepay/institute/{institute_id}/get
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                institute_id: true
+  lastNumber:
+    handler: api/lastNumber.index
+    package:
+      patterns:
+        - config/**
+        - api/lastNumber.js
+      individually: true
+    events:
+      - http:
+          path: lastnumber/institute/{institute_id}/add
+          method: post
+          cors: true
+  centerTxnSearch:
+    handler: api/loan/get.centersearchtxn
+    package:
+      patterns:
+        - config/**
+        - api/loan/get.js
+      individually: true
+    events:
+      - http:
+          path: centertxn/institute/{institute_id}/search
+          method: post
+          cors: true
+  closeLoanCreate:
+    handler: api/loan/add.closeloan
+    package:
+      patterns:
+        - config/**
+        - node_modules/uuid/**
+        - api/functions/functions.js
+        - api/loan/add.js
+      individually: true
+    events:
+      - http:
+          path: closeloan/institute/{institute_id}/create
+          method: post
+          cors: true
