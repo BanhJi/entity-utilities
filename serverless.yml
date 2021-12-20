@@ -60,49 +60,49 @@ functions:
           path: branch/institute/{institute_id}/create
           method: post
           cors: true
-  loanCreate:
-    handler: api/loan/add.index
-    package:
-      patterns:
-        - config/**
-        - node_modules/uuid/**
-        - api/functions/functions.js
-        - api/loan/add.js
-      individually: true
-    events:
-      - http:
-          path: loan/institute/{institute_id}/create
-          method: post
-          cors: true
-  loanGet:
-    handler: api/loan/get.get
-    package:
-      patterns:
-        - config/**
-        - api/loan/get.js
-      individually: true
-    events:
-      - http:
-          path: loan/institute/{institute_id}/get/{id}
-          method: get
-          cors: true
-          request:
-            parameters:
-              paths:
-                institute_id: true
-  loanGets:
-    handler: api/loan/get.gets
-    package:
-      patterns:
-        - config/**
-        - api/loan/get.js
-      individually: true
-    events:
-      - http:
-          path: loan/institute/{institute_id}/list
-          method: get
-          cors: true
-          request:
-            parameters:
-              paths:
-                institute_id: true
+#  loanCreate:
+#    handler: api/loan/add.index
+#    package:
+#      patterns:
+#        - config/**
+#        - node_modules/uuid/**
+#        - api/functions/functions.js
+#        - api/loan/add.js
+#      individually: true
+#    events:
+#      - http:
+#          path: loan/institute/{institute_id}/create
+#          method: post
+#          cors: true
+#  loanGet:
+#    handler: api/loan/get.get
+#    package:
+#      patterns:
+#        - config/**
+#        - api/loan/get.js
+#      individually: true
+#    events:
+#      - http:
+#          path: loan/institute/{institute_id}/get/{id}
+#          method: get
+#          cors: true
+#          request:
+#            parameters:
+#              paths:
+#                institute_id: true
+#  loanGets:
+#    handler: api/loan/get.gets
+#    package:
+#      patterns:
+#        - config/**
+#        - api/loan/get.js
+#      individually: true
+#    events:
+#      - http:
+#          path: loan/institute/{institute_id}/list
+#          method: get
+#          cors: true
+#          request:
+#            parameters:
+#              paths:
+#                institute_id: true
