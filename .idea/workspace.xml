@@ -21,13 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0dae3c0d-eb54-4054-b816-5f4eaacdeeae" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.serverless/cloudformation-template-update-stack.json" beforeDir="false" afterPath="$PROJECT_DIR$/.serverless/cloudformation-template-update-stack.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.serverless/loanCreate.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.serverless/loanCreate.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.serverless/serverless-state.json" beforeDir="false" afterPath="$PROJECT_DIR$/.serverless/serverless-state.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/lastNumber.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/lastNumber.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/loan/add.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/loan/add.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/loan/get.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/loan/get.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/loan/report.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/loan/report.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/serverless.yml" beforeDir="false" afterPath="$PROJECT_DIR$/serverless.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -279,6 +272,7 @@
       <workItem from="1637469777992" duration="8102000" />
       <workItem from="1637649629240" duration="597000" />
       <workItem from="1637658294761" duration="2134000" />
+      <workItem from="1639982925382" duration="74000" />
     </task>
     <servers />
   </component>
