@@ -39,7 +39,7 @@ custom:
     basePath: ${self:service}
     domainName: ${self:custom.domains.${self:custom.stage}}
     stage: ${self:custom.stage}
-    createRout53Record: true
+    createRout53Record: false
 
 package:
   individually: true
@@ -47,6 +47,19 @@ package:
     - "!**/*"
 
 functions:
+  branchCreate:
+    handler: api/settings/branch.create
+    package:
+      patterns:
+        - config/**
+        - node_modules/uuid/**
+        - api/settings/branch.js
+      individually: true
+    events:
+      - http:
+          path: branch/institute/{institute_id}/create
+          method: post
+          cors: true
   loanCreate:
     handler: api/loan/add.index
     package:
